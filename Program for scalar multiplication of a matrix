@@ -1,0 +1,41 @@
+/Program for scalar multiplication of a matrix
+import java.util.*;
+public class Matrix 
+{
+	static void scalarProductMat(int mat[][], int k,int N) 
+	{
+		for(int i=0;i<N;i++)
+		{
+			for(int j=0;j<N;j++)
+			{
+				mat[i][j]=k*mat[i][j];
+			}
+		}
+	}
+	static void printMat(int mat[][], int n) 
+    { 
+		for(int i=0;i<n;i++)
+		{
+			for(int j=0;j<n;j++)
+			{
+				System.out.print(mat[i][j]+" ");
+			}
+			System.out.println();
+		}
+    }
+	public static void main(String[] args) 
+	{
+		int mat[][]= {{2,3},
+				      {5,4}};
+		int N = mat.length;
+		int k=5;
+		
+		System.out.println("Original Matrix:"); 
+        printMat(mat, N); 
+      
+        scalarProductMat(mat,k,N); 
+      
+        System.out.println("Matrix After Sorting:"); 
+        printMat(mat, N);
+	}
+}
