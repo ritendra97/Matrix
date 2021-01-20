@@ -34,3 +34,46 @@ public class Matrix
         System.out.println("Index of row with maximum 1s is "+ rowWithMax1s(mat));
 	}
 }
+// Below we have optimized Solution
+import java.util.*;
+public class Matrix 
+{
+	static int first(int arr[],int n)
+	{
+		int index=-1;
+		for(int i=0;i<n;i++)
+		{
+			if(arr[i]==1)
+			{
+				index =i;
+				break;
+			}
+		}
+		return index;
+	}
+	static int rowWithMax1s(int[][] mat,int N,int M)
+	{
+		int max_row_index=-1;
+		int j = first(mat[0],N);
+		if(j==-1)
+			j=N-1;
+		for(int i=1;i<N;i++)
+		{
+			while(j>=0 && mat[i][j]==1)
+			{
+				j=j-1;
+				max_row_index=i;
+			}
+		}
+		return max_row_index;
+	}
+	public static void main(String[] args) 
+	{
+		int mat[][] = { { 0, 0, 0, 1 }, 
+                        { 0, 1, 1, 1 }, 
+                        { 1, 1, 1, 1 }, 
+                        { 0, 0, 0, 0 } };
+		int N=4,M=4;
+        System.out.println("Index of row with maximum 1s is "+ rowWithMax1s(mat,N,M));
+	}
+}
