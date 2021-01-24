@@ -1,0 +1,58 @@
+//Print K’th element in spiral form of matrix
+import java.util.*;
+public class Matrix 
+{
+	static int findK(int A[][], int m, int n, int k)
+    {
+		int count=0;
+	   	int row=0;
+	   	int col=0;
+	   	int ans= -1;
+	   	while(row<n && col<m)
+	   	{
+	   		for(int i=col;i<n;i++)
+	   		{
+	   			count++;
+	   			if(count==k)
+	   				return A[row][i];
+	   		}
+	   		row++;
+	   		for(int i=row;i<m;i++)
+	   		{
+	   			count++;
+	   			if(count==k)
+	   				return A[i][n-1];
+	   		}
+	   		n--;
+	   		if(row<m)
+	   		{
+	   			for(int i=n-1;i>=col;--i)
+		   		{
+	   				count++;
+		   			if(count==k)
+		   				return A[m-1][i];
+		   		}
+	   			m--;
+	   		}
+	   		if(col<n)
+	   		{
+	   			for(int i=m-1;i>=row;--i)
+		   		{
+	   				count++;
+		   			if(count==k)
+		   				return A[i][col];		   		
+		   		}
+	   			col++;
+	   		}
+	   	}
+	   	return ans;
+    }
+	public static void main(String[] args) 
+	{
+		int A[][] = {{1, 2, 3},
+		             {4, 5, 6},
+		             {7, 8, 9}};
+		int n = 3, m = 3, k = 5;
+		System.out.println(findK(A,n,m,k));
+	}
+}
