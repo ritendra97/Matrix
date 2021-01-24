@@ -1,0 +1,73 @@
+//Print unique rows in a given boolean matrix
+import java.util.*;
+public class Matrix 
+{
+	static int ROW = 4; 
+	static int COL = 5; 
+	static void findUniqueRows(int M[][]) 
+	{
+		boolean flag = false;
+		for(int i=0;i<ROW;i++)
+		{
+			for(int j=0;j<i;j++)
+			{
+				flag = true;
+				for(int k=0;k<COL;k++)
+				{
+					if(M[i][k]!=M[j][k])
+						flag = false;
+				}
+				if(flag == true)
+					break;
+			}
+			if(flag == false)
+			{
+				for(int j=0;j<COL;j++)
+				{
+					System.out.print(M[i][j]+" ");
+				}
+				System.out.println();
+			}
+		}
+	}
+	public static void main(String[] args) 
+	{
+		int M[][] =  {{ 0, 1, 0, 0, 1 }, 
+                      { 1, 0, 1, 1, 0 }, 
+                      { 0, 1, 0, 0, 1 }, 
+                      { 1, 0, 1, 0, 0 }}; 
+
+        findUniqueRows(M);
+	}
+}
+// This is efficient method
+import java.util.*;
+public class Matrix 
+{
+	static int ROW = 4; 
+	static int COL = 5; 
+	static HashSet<String> findUniqueRows(int M[][]) 
+	{
+		HashSet<String> hs = new HashSet<>();
+		for(int i=0;i<ROW;i++)
+		{
+			String result =" ";
+			for(int j=0;j<COL;j++)
+			{
+				result+=M[i][j];
+			}
+			if(!hs.contains(result))
+				hs.add(result);
+		}
+		return hs;
+	}
+	public static void main(String[] args) 
+	{
+		int M[][] =  {{ 0, 1, 0, 0, 1 }, 
+                      { 1, 0, 1, 1, 0 }, 
+                      { 0, 1, 0, 0, 1 }, 
+                      { 1, 0, 1, 0, 0 }}; 
+
+        System.out.print(findUniqueRows(M));
+	}
+}
