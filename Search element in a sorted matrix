@@ -1,0 +1,30 @@
+//Search element in a sorted matrix
+this is bit different as compare to row bise and column bise sorted
+import java.util.*;
+public class Matrix 
+ {
+	public static void matSearch(int mat[][], int N, int M, int X)
+    {
+		  int low=0;
+		  int high = M*N-1;
+		  while(low<=high)
+		  {
+			  int mid = (low+(high-low)/2);
+			  if(mat[mid/M][mid%M]==X)
+				  System.out.print(mid/M+" "+mid%M);
+			  if(mat[mid/M][mid%M]>X)
+				  high=mid-1;
+			  else
+				  low=mid+1;
+		  }
+    }
+	public static void main(String[] args) 
+	{
+		int N = 3, M = 3;
+		int mat[][] = { {1, 5, 9},
+                {14, 20, 21},
+                {30, 34, 43} };   
+		int X=14;
+		matSearch(mat,N,M,X);
+	}
+}
