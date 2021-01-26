@@ -1,0 +1,97 @@
+//Maximum size rectangle binary sub-matrix with all 1s
+import java.util.*;
+public class Matrix 
+{
+	static int LRA(int arr[])
+	{
+		//Left smaller
+		int ans2[] = new int[arr.length];
+		Stack<Integer> st1 = new Stack<Integer>();
+		int k1=0;
+		ans2[k1]=-1;
+		st1.push(0);
+		for(int i=1;i<arr.length;i++)
+		{
+			while(!st1.isEmpty() && arr[st1.peek()]>=arr[i])
+			{
+				st1.pop();
+			}
+			if(st1.isEmpty())
+			{
+				ans2[++k1]=-1;
+			}
+			else
+			{
+				ans2[++k1]=st1.peek();
+			}
+			st1.push(i);
+		}
+		// Right smaller
+		int ans[] = new int[arr.length];
+		Stack<Integer> st = new Stack<Integer>();
+		int k=arr.length-1;
+		ans[k]=arr.length;
+		for(int i=arr.length-2;i>=0;i--)
+		{
+			while(!st.isEmpty() && arr[st.peek()]>=arr[i])
+			{
+				st.pop();
+			}
+			if(st.isEmpty())
+			{
+				ans[--k]=arr.length;
+			}
+			else
+			{
+				ans[--k]=st.peek();
+			}
+			st.push(i);
+		}
+		int result=0;
+		for(int i=0;i<arr.length;i++)
+		{
+			result = Math.max(((ans[i]-ans2[i])-1)*arr[i],result);
+		}
+		return result;
+	}
+    static int maxRectangle(int R, int C, int A[][])
+    {
+    	int max=0;
+    	int last_max=0;
+    	int temp[] = new int[C];
+    	for(int i=0;i<R;i++)
+    	{
+    		temp[i]=A[0][i];
+    	}
+    	max=LRA(temp);
+    	for(int i=1;i<R;i++)
+    	{
+    		for(int j=0;j<C;j++)
+    		{
+    			if(A[i][j]==0)
+    			{
+    				temp[j]=0;
+    			}
+    			else
+    			{ 
+    				temp[j]=temp[j]+A[i][j];
+    			}
+    		}
+    		max=Math.max(max, LRA(temp));
+    	}
+    	return max;
+	}
+	public static void main(String[] args) 
+	{
+		int R = 4;
+        int C = 4;
+ 
+        int A[][] = {
+            { 0, 0, 1, 1 },
+            { 0, 0, 0, 0 },
+            { 0, 0, 0, 0 },
+            { 0, 0, 0, 0 },
+        };
+        System.out.print("Area of maximum rectangle is "+ maxRectangle(R, C, A));
+	}
+}
