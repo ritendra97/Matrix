@@ -1,0 +1,69 @@
+import java.util.*;
+public class MatrixPractice {
+
+	static int findmedian(int arr[][],int r,int c,int k) {
+		
+		int min = Integer.MAX_VALUE;
+		int max = Integer.MIN_VALUE;
+		
+		for(int i=0;i<r;i++)
+	    {
+	        if(arr[i][0]<min)
+	        min = arr[i][0];
+	        
+	        
+	        if(arr[i][c-1]>max)
+	        max = arr[i][c-1];
+	    }
+		
+		int desired_count = k;
+		
+		while(min<max) {
+			
+			int mid = min+(max-min)/2;
+			int place=0;
+			int get=0;
+			for(int i= 0;i<r;i++){
+				
+	            get = Arrays.binarySearch(arr[i], mid);
+	            
+	            if(get<0) {
+	            	get = Math.abs(get)-1;
+	            }
+	            else {
+	            	while(get<arr[i].length && arr[i][get]==mid)
+	            		get+=1;
+	            }
+	            
+	            place+=get;
+	        }
+			
+			if(place<desired_count)
+				min=mid+1;
+			else
+				max = mid;
+		}
+		return min;
+
+	}
+	static void printMatrix(int arr[][]) 
+    { 
+        for (int i = 0; i < arr.length; i++) { 
+            for (int j = 0; j < arr[0].length;j++) 
+                System.out.print(arr[i][j] + " "); 
+            System.out.println(""); 
+        } 
+    } 
+	public static void main(String[] args) {
+
+		int mat[][] =  {{ 10, 20, 30, 40 },
+                { 15, 25, 35, 45 },
+                { 25, 29, 37, 48 },
+                { 32, 33, 39, 50 }};
+        int R=4;
+        int C=4;
+        int K=7;
+        System.out.print(findmedian(mat,R,C,K));
+	}
+
+}
