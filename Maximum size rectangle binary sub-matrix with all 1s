@@ -5,10 +5,10 @@ public class Matrix
 	static int LRA(int arr[])
 	{
 		//Left smaller
-		int ans2[] = new int[arr.length];
+		int ans1[] = new int[arr.length];
 		Stack<Integer> st1 = new Stack<Integer>();
 		int k1=0;
-		ans2[k1]=-1;
+		ans1[k1]=-1;
 		st1.push(0);
 		for(int i=1;i<arr.length;i++)
 		{
@@ -18,39 +18,39 @@ public class Matrix
 			}
 			if(st1.isEmpty())
 			{
-				ans2[++k1]=-1;
+				ans1[++k1]=-1;
 			}
 			else
 			{
-				ans2[++k1]=st1.peek();
+				ans1[++k1]=st1.peek();
 			}
 			st1.push(i);
 		}
 		// Right smaller
-		int ans[] = new int[arr.length];
-		Stack<Integer> st = new Stack<Integer>();
-		int k=arr.length-1;
-		ans[k]=arr.length;
+		int ans2[] = new int[arr.length];
+		Stack<Integer> st2 = new Stack<Integer>();
+		int k2=arr.length-1;
+		ans2[k2]=arr.length;
 		for(int i=arr.length-2;i>=0;i--)
 		{
-			while(!st.isEmpty() && arr[st.peek()]>=arr[i])
+			while(!st2.isEmpty() && arr[st2.peek()]>=arr[i])
 			{
-				st.pop();
+				st2.pop();
 			}
-			if(st.isEmpty())
+			if(st2.isEmpty())
 			{
-				ans[--k]=arr.length;
+				ans2[--k2]=arr.length;
 			}
 			else
 			{
-				ans[--k]=st.peek();
+				ans2[--k2]=st2.peek();
 			}
-			st.push(i);
+			st2.push(i);
 		}
 		int result=0;
 		for(int i=0;i<arr.length;i++)
 		{
-			result = Math.max(((ans[i]-ans2[i])-1)*arr[i],result);
+			result = Math.max(((ans2[i]-ans1[i])-1)*arr[i],result);
 		}
 		return result;
 	}
