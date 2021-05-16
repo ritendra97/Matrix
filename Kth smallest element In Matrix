@@ -1,69 +1,60 @@
-import java.util.*;
-public class MatrixPractice {
+// 
+class Solution {
+    public int kthSmallest(int[][] matrix, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> (b - a));
+        for (int i = 0; i < matrix.length; i++){
+            for (int j = 0; j < matrix.length; j++){
+                pq.add(matrix[i][j]);
+                if (pq.size() > k) pq.poll();
+            }
+        }
+        return pq.poll();
+    }
+}
+Given a n x n matrix where each of the rows and columns are sorted in ascending order, find the kth smallest element in the matrix, and k is always valid, 1<= k <= n^2.
 
-	static int findmedian(int arr[][],int r,int c,int k) {
-		
-		int min = Integer.MAX_VALUE;
-		int max = Integer.MIN_VALUE;
-		
-		for(int i=0;i<r;i++)
-	    {
-	        if(arr[i][0]<min)
-	        min = arr[i][0];
-	        
-	        
-	        if(arr[i][c-1]>max)
-	        max = arr[i][c-1];
-	    }
-		
-		int desired_count = k;
-		
-		while(min<max) {
-			
-			int mid = min+(max-min)/2;
-			int place=0;
-			int get=0;
-			for(int i= 0;i<r;i++){
-				
-	            get = Arrays.binarySearch(arr[i], mid);
-	            
-	            if(get<0) {
-	            	get = Math.abs(get)-1;
-	            }
-	            else {
-	            	while(get<arr[i].length && arr[i][get]==mid)
-	            		get+=1;
-	            }
-	            
-	            place+=get;
-	        }
-			
-			if(place<desired_count)
-				min=mid+1;
-			else
-				max = mid;
-		}
-		return min;
+So, the kth smallest element is between matrix[0][0] and matrix[m - 1][n - 1], where m is number of rows of the matrix, n is number of columns of the matrix. Let low = matrix[0][0], and high = matrix[m - 1][n - 1], using binary search to calculate mid value, and find the count of elements which are less than and equal to mid.
 
-	}
-	static void printMatrix(int arr[][]) 
-    { 
-        for (int i = 0; i < arr.length; i++) { 
-            for (int j = 0; j < arr[0].length;j++) 
-                System.out.print(arr[i][j] + " "); 
-            System.out.println(""); 
-        } 
-    } 
-	public static void main(String[] args) {
+Notice that the mid is just a value calculated by using low and high, not a true element in the matrix, so when count < k, it means that the mid is small, let low = mid + 1 to find the true element in matrix one by one. And when count > k, it means that the mid is big enough, let high = mid to ensure the element we need is between low and high(mid). And when count = k, it means that there are k elements less than or equal to mid in the matrix, but we don't know whether the element we need is equal to mid. So let high = mid, it can ensure that the element we need is between low and high(mid).
 
-		int mat[][] =  {{ 10, 20, 30, 40 },
-                { 15, 25, 35, 45 },
-                { 25, 29, 37, 48 },
-                { 32, 33, 39, 50 }};
-        int R=4;
-        int C=4;
-        int K=7;
-        System.out.print(findmedian(mat,R,C,K));
-	}
+For example, given a matrix and k = 8,
+[[ 1, 5, 9],
+[10, 11, 13],
+[12, 13, 15]],
 
+low = matrix[0][0] = 1, high = matrix[2][2] = 15, mid = 8, count is element number of set {1, 5} = 2, count < k, let low = mid + 1 = 9;
+low = 9, high = 15, mid = 12, count is element number of set {1, 5, 9, 10, 11, 12} = 6, count < k, let low = mid + 1 = 13;
+low = 13, high = 15, mid = 14, count is element number of set {1, 5, 9, 10, 11, 12, 13, 13} = 8, count = k, but the element we need is 13, not the mid(14), so let high = mid = 14 to narrow the search gap.
+low = 13, high = 14, mid = 13, count = 8, count = k, let high = mid = 13,
+low = 13, high = 13, low and high are meet, now return low.
+Notice that using (low < high) in while loop rather than using (low <= high) to avoid stay in the loop. It takes log(m * n) times to find mid, and using (m + n) times to get count in each loop, so time complexity is O((m + n) log (m * n)). The matrix is n x n, So the time complexity is O(n log (n^2)).
+
+This problem is similar to problem 668. Kth Smallest Number in Multiplication Table.
+// optimized code
+    public int kthSmallest(int[][] matrix, int k) {
+     
+        int n = matrix.length;
+        
+        int low = matrix[0][0];
+        int high = matrix[n-1][n-1];
+       
+        while(low<high) {
+            
+            int mid = low+(high-low)/2;
+            int count=0;
+            int j = n-1;
+            for(int i=0;i<n;i++){
+                
+                while(j>=0 && matrix[i][j]>mid){
+                    j--;
+                }
+                count+=j+1;    
+            }
+            if(count<k)
+                 low = mid+1;
+            else
+                 high = mid;
+        }
+        return low;
+    }
 }
