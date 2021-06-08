@@ -1,0 +1,115 @@
+//A Boolean Matrix Question
+// Bruteforce method
+import java.util.*;
+public class Solution {
+	
+
+    public static void modifyMatrix(int mat[][], int R, int C) {
+
+    	boolean row[] = new boolean[R];
+    	boolean col[] = new boolean[C];
+    	
+    	for(int i=0;i<R;i++) {
+    		for(int j=0;j<C;j++) {
+    			if(mat[i][j]==1) {
+    				col[j] = true;
+    				row[i] = true;
+    			}
+    		}
+    	}
+    	
+    	for(int i=0;i<R;i++) {
+    		for(int j=0;j<C;j++) {
+    			if(row[i]==true && col[j]==true) {
+    				for(int k=0;k<mat[0].length;k++) {
+    					mat[i][k]=1;
+    				}	
+    			}else if(col[j]==true){
+    				mat[i][j] = 1;
+    			}
+    		}
+    	}
+    	
+    	for(int i=0;i<R;i++) {
+    		for(int j=0;j<C;j++) {
+    			System.out.print(mat[i][j]+" ");
+    		}
+    		System.out.println();
+    	}
+    }	
+	public static void main(String[] args) {
+		
+		int matrix[][]= {{1,0},
+				         {0,0},
+				   };
+		
+		modifyMatrix(matrix,2,2);
+	}
+	
+}
+
+// Optimized Solution
+import java.util.*;
+public class Solution {
+		
+
+	public static void modifyMatrix(int mat[][], int R, int C) {
+
+		boolean flag_row=false;
+		boolean flag_col=false;
+		
+		for(int i=0;i<mat.length;i++) {
+			for(int j=0;j<mat[0].length;j++) {
+				
+				if(i==0 && mat[i][j]==1)
+					flag_row=true;
+				if(j==0 && mat[i][j]==1)
+					flag_col=true;
+				
+				if(mat[i][j]==1) {
+					mat[0][j] =1;
+					mat[i][0] =1;
+				}
+			}
+		}
+		
+		for(int i=1;i<mat.length;i++) {
+			for(int j=1;j<mat[0].length;j++) {
+				if(mat[0][j]==1 || mat[i][0]==1) {
+					mat[i][j]=1;
+				}
+			}
+		}
+		
+		if(flag_row==true) {
+			
+			for(int i=0;i<mat.length;i++) {
+				mat[0][i]=1;
+			}
+		}
+		
+		if(flag_col==true) {
+			for(int i=0;i<mat.length;i++) {
+				mat[i][0]=1;
+			}
+		}
+    }
+    public static void printMatrix(int mat[][]){
+        for (int i = 0; i < mat.length; i ++){
+            for (int j = 0; j < mat[0].length; j ++){
+                System.out.print( mat[i][j] );
+            }
+                System.out.println("");
+        }
+    }	
+   	public static void main(String[] args) {
+		
+		int matrix[][]= {{1, 0, 0, 1},
+                         {0, 0, 1, 0},
+                         {0, 0, 0, 0},};
+		
+		modifyMatrix(matrix,2,2);
+		printMatrix(matrix);
+	}
+	
+}
