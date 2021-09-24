@@ -1,4 +1,38 @@
 //Print a given matrix in spiral form
+
+class Solution {
+    public List < Integer > spiralOrder(int[][] matrix) {
+        List ans = new ArrayList();
+        if (matrix.length == 0)
+            return ans;
+        int minr = 0, maxr = matrix.length - 1;
+        int minc = 0, maxc = matrix[0].length - 1;
+        while (minr <= maxr && minc <= maxc) 
+        {
+            for (int c = minc; c <= maxc; c++) 
+                ans.add(matrix[minr][c]);
+            
+            for (int r = minr + 1; r <= maxr; r++) 
+                ans.add(matrix[r][maxc]);
+            
+            if (minr < maxr && minc < maxc)
+            {
+                for (int c = maxc - 1; c > minc; c--) 
+                    ans.add(matrix[maxr][c]);
+                
+                for (int r = maxr; r > minr; r--) 
+                    ans.add(matrix[r][minc]);
+            }
+            minr++;
+            maxr--;
+            minc++;
+            maxc--;
+        }
+        return ans;
+    }
+}
+
+
 import java.util.*;
 public class Matrix 
 {
