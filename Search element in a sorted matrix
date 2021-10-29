@@ -64,7 +64,9 @@ public class Matrix
 
 }
 // Time complexity O(logn)
-this is bit different as compare to row bise and column bise sorted
+//this is bit different as compare to row bise and column bise sorted
+//Basically you need to divide it by col
+
 import java.util.*;
 public class Matrix 
  {
