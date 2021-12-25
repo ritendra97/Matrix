@@ -1,0 +1,24 @@
+//Maximum Distance in Array
+
+public class Main2{
+    public static void Solution(int arr[][]){
+        int output = 0;
+        int min = arr[0][0];
+        int max = arr[0][arr.length-1];
+
+        for(int i = 1;i<arr.length;i++){
+            output =  Math.max( Math.abs(min-arr[i][arr.length-1]),Math.abs( max-arr[i][0] ) );
+            min = Math.min(min,arr[i][0]);
+            max = Math.max(max,arr[i][arr.length-1]);
+        }
+
+        System.out.println(output);
+    }
+    public static void main(String[] args){
+
+        int arr[][] = {{1,2,3},
+                       {0,2,3},
+                       {1,4,5}};
+        Solution(arr);
+    }
+}
