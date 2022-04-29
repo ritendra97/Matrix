@@ -1,85 +1,54 @@
-//Print a given matrix in spiral form
+public class Main4 {
+    /*  k - starting row index
+           m - ending row index
+           l - starting column index
+           n - ending column index
+           i - iterator
+           */
+    public static void Solution(int arr[][]){
 
-class Solution {
-    public List < Integer > spiralOrder(int[][] matrix) {
-        List ans = new ArrayList();
-        if (matrix.length == 0)
-            return ans;
-        int minr = 0, maxr = matrix.length - 1;
-        int minc = 0, maxc = matrix[0].length - 1;
-        while (minr <= maxr && minc <= maxc) 
-        {
-            for (int c = minc; c <= maxc; c++) 
-                ans.add(matrix[minr][c]);
-            
-            for (int r = minr + 1; r <= maxr; r++) 
-                ans.add(matrix[r][maxc]);
-            
-            if (minr < maxr && minc < maxc)
-            {
-                for (int c = maxc - 1; c > minc; c--) 
-                    ans.add(matrix[maxr][c]);
-                
-                for (int r = maxr; r > minr; r--) 
-                    ans.add(matrix[r][minc]);
+        int minr = 0;
+        int minc = 0;
+        int maxr = arr.length-1;
+        int maxc = arr[0].length-1;
+
+
+        while (minr<=maxr && minc<=maxc){
+
+            for(int i = minc;i<=maxc;i++){
+                System.out.print(arr[minr][i]+" ");
             }
             minr++;
-            maxr--;
-            minc++;
+
+            for(int i = minr;i<=maxr;i++){
+                System.out.print(arr[i][maxc]+" ");
+            }
             maxc--;
+
+            if(minr<maxr){
+                for(int i = maxc;i>=minc;i--){
+                    System.out.print(arr[maxr][i]+" ");
+                }
+                maxr--;
+            }
+
+            if(minc<maxc){
+                for(int i = maxr;i>=minr;i--){
+                    System.out.print(arr[i][minc]+" ");
+                }
+                minc++;
+            }
+
         }
-        return ans;
+
     }
-}
 
+    public static void main(String[] args){
+        int arr[][] = {{1,2,3},
+                       {7,8,9},
+                       {13,14,15},
+                       {10,11,12}};
+        Solution(arr);
 
-import java.util.*;
-public class Matrix 
-{
-	static void spiralPrint(int R, int C, int a[][])
-	{ 
-		int k=0;
-		int l=0;
-		int i;
-		while(k<R && l<C)
-		{
-			for(i=l;i<C;i++)
-			{
-				System.out.print(a[k][i]+" ");
-			}
-			k++;
-			for(i=k;i<R;i++)
-			{
-				System.out.print(a[i][C-1]+" ");
-			}
-			C--;
-			if(k<R)
-			{
-				for(i=C-1;i>=l;i--)
-				{
-					System.out.print(a[R-1][i]+" ");
-				}
-				R--;
-			}
-			if(l<C)
-			{
-				for(i=R-1;i>=k;i--)
-				{
-					System.out.print(a[i][l]+" ");
-				}
-				l++;
-			}
-			
-		}
-	}
-	public static void main(String[] args) 
-	{
-		int R = 4;
-	    int C = 3;
-	    int a[][]={{ 1, 2, 3 },
-	               { 7, 8, 9},
-	               { 13, 14, 15},
-	               {10,11,12}};	  
-	    spiralPrint(R, C, a);
-	}
+    }
 }
