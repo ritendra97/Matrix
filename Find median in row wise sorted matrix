@@ -1,4 +1,57 @@
 //Find median in row wise sorted matrix
+
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
+class Node{
+    int data;
+    int row;
+    int col;
+
+    Node(int data, int row, int col){
+        this.data = data;
+        this.row = row;
+        this.col = col;
+    }
+}
+
+class ArrayProblems{
+
+    public static int median(int matrix[][],int r,int c) {
+        
+        int median = -1;
+        int count = 0;
+        int medianIndex = r*c/2;    
+        PriorityQueue<Node> minHeap = new PriorityQueue<>(new Comparator<Node>() {
+           public int compare(Node n1, Node n2){
+                return n1.data-n2.data;
+           }; 
+        });
+        for(int i = 0;i<r;i++){
+            minHeap.add(new Node(matrix[i][0],i,0));
+        }
+
+        while(count<=medianIndex){
+            Node top = minHeap.remove();
+            median = top.data;
+            count++;
+            if(top.col+1<c){
+                minHeap.add(new Node(matrix[top.row][top.col+1], top.row,top.col+1));
+            }
+        }
+        return median;
+    }
+
+    public static void main(String[] args) {
+        
+        int r=3;
+        int c=3;
+        int matrix[][] = {{1, 3, 5},
+                          {2, 6, 9},
+                          {3, 6, 9}};
+        System.out.print(median(matrix, r, c));
+    }  
+}
 import java.util.*;
 public class Matrix 
 { 
